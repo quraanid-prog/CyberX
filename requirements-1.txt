@@ -1,0 +1,2 @@
+# CyberX is a static HTML/CSS/JavaScript website.
+# No Python packages, Node packages, or external dependencies are required.

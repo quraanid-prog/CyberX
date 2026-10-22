@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="CyberX is an interactive cybersecurity awareness website for learning safe internet habits.">
+<title>CyberX | Fun Internet Safety</title>
+<style>
+:root{--bg:#120422;--card:#2a0a4a;--pink:#ff007f;--cyan:#00ffff;--yellow:#ffe600;--purple:#b829ff;--green:#00ff66;--white:#fff;--radius:16px}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Segoe UI,Roboto,Arial,sans-serif}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{background:var(--bg);color:var(--white);line-height:1.6;overflow-x:hidden}
+h1,h2,h3{line-height:1.2;margin-bottom:15px}h1{font-size:clamp(2.2rem,7vw,3.5rem);color:var(--cyan);text-shadow:0 0 14px #00ffff66}
+h2{font-size:clamp(1.6rem,5vw,2.2rem);color:var(--pink);border-bottom:3px solid var(--purple);padding-bottom:10px;margin:0 0 20px}
+h3{font-size:1.4rem;color:var(--yellow)}p{margin-bottom:15px;font-size:1.05rem}
+.container{width:100%;max-width:950px;margin:auto;padding:0 20px}section{padding:55px 0}
+header{position:sticky;top:0;z-index:10;background:#2a0a4aee;backdrop-filter:blur(10px);padding:14px 0;border-bottom:2px solid var(--pink)}
+.header-content{display:flex;justify-content:space-between;align-items:center;gap:12px}.logo{font-size:1.8rem;font-weight:900;color:var(--cyan);text-decoration:none;letter-spacing:2px}.logo span{color:var(--pink)}
+.btn{display:inline-block;background:var(--purple);color:white;border:2px solid var(--purple);border-radius:30px;padding:12px 24px;font-weight:bold;text-decoration:none;cursor:pointer;min-height:46px;transition:.2s}
+.btn:hover,.btn:focus{background:transparent;color:var(--cyan);border-color:var(--cyan)}
+.btn-cyan{background:var(--cyan);border-color:var(--cyan);color:var(--bg)}
+.hero{text-align:center;padding:85px 20px;background:radial-gradient(circle at center,var(--card),var(--bg) 72%)}
+.hero p{max-width:720px;margin:16px auto}.hero .lead{font-size:1.35rem;color:var(--cyan)}
+.card{background:var(--card);border:2px solid var(--purple);border-radius:var(--radius);padding:24px;margin:20px 0;box-shadow:0 10px 24px #0005}
+.password-box{text-align:center}input[type=password],input[type=text]{width:100%;max-width:450px;padding:14px;font-size:1.1rem;border:3px solid var(--purple);border-radius:10px;background:var(--bg);color:white;margin:5px 0 15px}
+input:focus,button:focus{outline:3px solid var(--yellow);outline-offset:3px}
+.meter-bg{width:100%;max-width:450px;height:18px;background:#ffffff22;border-radius:10px;margin:0 auto 10px;overflow:hidden}#pwd-meter{height:100%;width:0;background:var(--pink);transition:width .25s}
+.feedback{font-weight:bold;min-height:28px}
+.phone-mockup{background:#fff;color:#252525;border-radius:18px;padding:20px;max-width:520px;margin:20px auto;border:5px solid var(--cyan)}
+.phone-header{border-bottom:1px solid #ccc;margin-bottom:14px}.phone-mockup p{font-size:1rem}
+.phish-flag{cursor:pointer;border-bottom:2px dashed var(--pink);background:#ff007f1a;padding:2px 4px;border-radius:4px;color:#222}
+.phish-flag.found{background:var(--green);border-color:green;font-weight:bold}
+#phish-feedback,#quiz-feedback-box{margin-top:18px;padding:15px;border:2px solid var(--yellow);border-radius:10px;background:var(--card);display:none}
+.monster-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.flip-card{height:260px;perspective:1000px;cursor:pointer}.flip-card-inner{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-card-front,.flip-card-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border:3px solid var(--pink)}
+.flip-card-front{background:var(--card)}.flip-card-front h3{font-size:1.8rem}.flip-card-front p{color:var(--cyan)}.flip-card-back{background:var(--pink);color:var(--bg);transform:rotateY(180deg);border-color:white}.flip-card-back h3,.flip-card-back p{color:var(--bg)}
+.quiz-option{display:block;width:100%;text-align:left;background:var(--bg);color:white;border:2px solid var(--cyan);border-radius:10px;padding:14px;margin:10px 0;cursor:pointer;font-size:1rem}
+.quiz-option:hover{background:#00ffff22}.quiz-option.correct{background:var(--green);color:#111;border-color:var(--green)}.quiz-option.wrong{background:var(--pink);border-color:var(--pink)}
+.shield-meter-container{background:#ffffff22;border-radius:20px;height:28px;margin:15px 0 20px;overflow:hidden;border:2px solid var(--cyan);position:relative}
+#shield-bar{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--green));transition:width .3s}.shield-text{position:absolute;inset:0;text-align:center;font-weight:bold;text-shadow:1px 1px 3px #000}
+.check-item{display:flex;align-items:center;gap:14px;background:var(--card);padding:14px;border-radius:10px;margin:10px 0;border:2px solid transparent}.check-item:has(input:checked){border-color:var(--green);background:#00ff6615}.check-item input{width:22px;height:22px;accent-color:var(--green)}.check-item label{flex:1;cursor:pointer}
+.emergency-steps{list-style:none}.emergency-steps li{background:#ff007f1a;border-left:5px solid var(--pink);padding:14px 18px;margin:12px 0;border-radius:0 10px 10px 0}.emergency-steps strong{color:var(--pink)}
+footer{text-align:center;padding:35px 20px;background:var(--card);border-top:2px solid var(--purple)}.small{font-size:.9rem;opacity:.85}
+@media(max-width:600px){.header-content{align-items:center}.logo{font-size:1.5rem}.hero{padding:60px 12px}.card{padding:18px}.btn{width:100%;text-align:center}.flip-card{height:275px}}
+</style>
+</head>
+<body>
+<header><div class="container header-content"><a href="#" class="logo">Cyber<span>X</span></a><strong style="color:var(--yellow)">Stay Safe!</strong></div></header>
+<main>
+<section class="hero"><div class="container"><h1>Welcome to CyberX!</h1><p class="lead">Learn how to be an internet superhero.</p><p>The internet is awesome, but it has tricky traps. Learn how to spot them and protect your digital life through quick, interactive activities.</p><a href="#passwords" class="btn btn-cyan">Start Playing</a></div></section>
+<section id="passwords" class="container"><h2>1. Super-Strong Passwords</h2><p>A strong password is like a sturdy lock. Try the tester with a <strong>fake practice password only</strong>—never enter a real password.</p><div class="card password-box"><h3>Test Your Secret Code</h3><input type="text" id="pwd-input" autocomplete="off" placeholder="Type a fake password..." aria-label="Fake practice password"><div class="meter-bg"><div id="pwd-meter"></div></div><p id="pwd-feedback" class="feedback" aria-live="polite">Type to see a rough strength estimate.</p><div style="text-align:left;margin-top:20px"><p><strong>Recipe for a stronger password:</strong></p><ul style="margin-left:22px"><li>Use a long, unique passphrase.</li><li>Aim for 12–16 or more characters.</li><li>Avoid names, birthdays, and reused passwords.</li><li>Use a password manager and enable multi-factor authentication when available.</li></ul></div></div></section>
+<section id="phishing" class="container"><h2>2. Spot the Fake Message</h2><p>Phishing messages try to trick people into revealing information or sending money.</p><p style="color:var(--yellow);font-weight:bold">Game: tap the three suspicious red flags below.</p><div class="phone-mockup"><div class="phone-header"><p><strong>From:</strong> <span class="phish-flag" data-hint="The sender address is unfamiliar and does not match an official bank domain.">security@free-update-now.xyz</span></p><p><strong>Subject:</strong> <span class="phish-flag" data-hint="Threats and urgent deadlines pressure people to act before checking.">URGENT: Account Will Be Closed!</span></p></div><p>Dear Customer,</p><p>Your account has a problem. Click the button in the next 24 hours or you will lose everything.</p><p style="text-align:center;margin:20px 0"><span class="phish-flag" data-hint="Unexpected links should not be trusted. Open the official app or type the known website address yourself. " style="background:blue;color:white;padding:10px 18px;border-radius:5px;display:inline-block">Verify Account Now</span></p><p>Thanks,<br>The Bank Team</p></div><div id="phish-feedback" aria-live="polite"><h3>Good catch!</h3><p id="phish-explanation"></p><p id="phish-score" style="color:var(--yellow);font-weight:bold">Found: 0 / 3</p><button id="reset-phish" class="btn">Reset game</button></div></section>
+<section id="malware" class="container"><h2>3. Scary Software (Malware)</h2><p>Malware is software designed to harm devices, steal data, or disrupt systems. Tap a card to flip it.</p><div class="monster-grid">
+<div class="flip-card" tabindex="0" role="button" aria-label="Reveal virus information"><div class="flip-card-inner"><div class="flip-card-front"><div style="font-size:3.5rem">🦠</div><h3>The Virus</h3><p>Tap to reveal</p></div><div class="flip-card-back"><h3>The Virus</h3><p>Can attach to files and spread when they run.<br><br><strong>Defence:</strong> Update software and avoid suspicious downloads.</p></div></div></div>
+<div class="flip-card" tabindex="0" role="button" aria-label="Reveal spyware information"><div class="flip-card-inner"><div style="font-size:0;position:absolute"></div><div class="flip-card-front"><div style="font-size:3.5rem">👁️</div><h3>Spyware</h3><p>Tap to reveal</p></div><div class="flip-card-back"><h3>Spyware</h3><p>Secretly collects information about a device or its user.<br><br><strong>Defence:</strong> Install trusted apps and review permissions.</p></div></div></div>
+<div class="flip-card" tabindex="0" role="button" aria-label="Reveal ransomware information"><div class="flip-card-inner"><div class="flip-card-front"><div style="font-size:3.5rem">🔒</div><h3>Ransomware</h3><p>Tap to reveal</p></div><div class="flip-card-back"><h3>Ransomware</h3><p>Can encrypt files and demand payment.<br><br><strong>Defence:</strong> Keep separate, tested backups and update devices.</p></div></div></div>
+</div></section>
+<section id="quiz" class="container"><h2>4. Cyber-Smart Quiz</h2><p>Choose the safest response. Your score updates as you go.</p><div class="card"><h3 id="question">Question 1 of 4</h3><p id="question-text"></p><div id="quiz-options"></div><div id="quiz-feedback-box" aria-live="polite"></div><p id="quiz-score">Score: 0 / 4</p><button id="next-question" class="btn btn-cyan" style="display:none">Next question</button><button id="restart-quiz" class="btn" style="display:none">Play again</button></div></section>
+<section id="checklist" class="container"><h2>5. Personal Safety Shield</h2><p>Tick the habits already in place to build your safety score.</p><div class="shield-meter-container"><div id="shield-bar"></div><div class="shield-text" id="shield-text">0% protected</div></div><div id="checklist-items">
+<div class="check-item"><input id="c1" type="checkbox"><label for="c1">I use unique passwords or passphrases for important accounts.</label></div>
+<div class="check-item"><input id="c2" type="checkbox"><label for="c2">I enable multi-factor authentication where possible.</label></div>
+<div class="check-item"><input id="c3" type="checkbox"><label for="c3">I install updates for my phone, apps, and computer.</label></div>
+<div class="check-item"><input id="c4" type="checkbox"><label for="c4">I check links and sender details before responding.</label></div>
+<div class="check-item"><input id="c5" type="checkbox"><label for="c5">I back up important files and photos.</label></div>
+<div class="check-item"><input id="c6" type="checkbox"><label for="c6">I limit app permissions and avoid sharing private information publicly.</label></div>
+</div></section>
+<section id="emergency" class="container"><h2>6. What If Something Goes Wrong?</h2><p>If an account or device may be compromised, stay calm and act from a trusted device.</p><ol class="emergency-steps"><li><strong>1. Stop:</strong> Do not click further links, reply, or pay a suspicious demand.</li><li><strong>2. Secure accounts:</strong> From a trusted device, change affected passwords and enable multi-factor authentication.</li><li><strong>3. Contact the provider:</strong> Use the official app or website to report the incident and recover access.</li><li><strong>4. Check the device:</strong> Update security software, scan the device, and seek trusted technical help if needed.</li><li><strong>5. Report and preserve evidence:</strong> Save relevant messages and report fraud to the appropriate local authority. In India, cybercrime can be reported at <em>cybercrime.gov.in</em>.</li></ol></section>
+</main>
+<footer><p><strong style="color:var(--cyan)">CyberX</strong> — Learn smart. Click safe.</p><p class="small">Educational college project. The password tester is a simple local demonstration, not a security audit. Do not enter real credentials.</p><p class="small">© 2026 CyberX Awareness Project</p></footer>
+<script>
+const pwdInput=document.getElementById('pwd-input'), meter=document.getElementById('pwd-meter'), pwdFeedback=document.getElementById('pwd-feedback');
+pwdInput.addEventListener('input',()=>{const p=pwdInput.value;let score=0;if(p.length>=8)score++;if(p.length>=12)score++;if(/[a-z]/.test(p)&&/[A-Z]/.test(p))score++;if(/[0-9]/.test(p))score++;if(/[^A-Za-z0-9]/.test(p))score++;const pct=Math.min(100,score*20);meter.style.width=pct+'%';meter.style.background=pct<40?'var(--pink)':pct<80?'var(--yellow)':'var(--green)';const labels=['Very weak','Weak','Getting stronger','Good practice example','Strong-looking example','Strong-looking example'];pwdFeedback.textContent=p?labels[score]+' — '+p.length+' characters. Use a unique passphrase.':'Type to see a rough strength estimate.';});
+let found=0;const flags=[...document.querySelectorAll('.phish-flag')];const phishFeedback=document.getElementById('phish-feedback');
+flags.forEach(flag=>flag.addEventListener('click',()=>{if(flag.classList.contains('found'))return;flag.classList.add('found');found++;document.getElementById('phish-explanation').textContent=flag.dataset.hint;document.getElementById('phish-score').textContent=`Found: ${found} / 3`;phishFeedback.style.display='block';if(found===3)document.getElementById('phish-explanation').textContent='All three flags found! Check the sender, urgency, and link before taking action.';}));
+document.getElementById('reset-phish').addEventListener('click',()=>{found=0;flags.forEach(f=>f.classList.remove('found'));phishFeedback.style.display='none';document.getElementById('phish-score').textContent='Found: 0 / 3';});
+document.querySelectorAll('.flip-card').forEach(card=>{const flip=()=>card.classList.toggle('flipped');card.addEventListener('click',flip);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip();}});});
+const questions=[
+{q:'A message says your account will close unless you click a link immediately. What is safest?',a:['Click quickly','Open the official app or website independently','Reply with your password'],correct:1,why:'Urgency is a common pressure tactic. Verify through a trusted channel.'},
+{q:'What is a good password habit?',a:['Reuse one password everywhere','Use your birthday','Use long, unique passwords or passphrases'],correct:2,why:'Unique passwords limit the damage if one account is compromised.'},
+{q:'An unknown app asks for access to contacts, microphone, and location. What should you do?',a:['Allow everything','Review whether each permission is necessary','Share the request publicly'],correct:1,why:'Grant only permissions that are necessary and appropriate.'},
+{q:'Why keep backups?',a:['To recover files after loss or ransomware','To make passwords shorter','To stop every scam automatically'],correct:0,why:'Backups can help restore important files after an incident.'}
+];let qi=0,score=0,answered=false;const qText=document.getElementById('question-text'),qTitle=document.getElementById('question'),options=document.getElementById('quiz-options'),qFeedback=document.getElementById('quiz-feedback-box'),nextBtn=document.getElementById('next-question'),restartBtn=document.getElementById('restart-quiz');
+function renderQuestion(){answered=false;qFeedback.style.display='none';nextBtn.style.display='none';restartBtn.style.display='none';qTitle.textContent=`Question ${qi+1} of ${questions.length}`;qText.textContent=questions[qi].q;options.innerHTML='';questions[qi].a.forEach((answer,i)=>{const b=document.createElement('button');b.className='quiz-option';b.textContent=answer;b.addEventListener('click',()=>chooseAnswer(i,b));options.appendChild(b);});}
+function chooseAnswer(i,button){if(answered)return;answered=true;const q=questions[qi];[...options.children].forEach((b,j)=>{b.disabled=true;if(j===q.correct)b.classList.add('correct');});if(i===q.correct)score++;else button.classList.add('wrong');qFeedback.textContent=(i===q.correct?'Correct! ':'Not quite. ')+q.why;qFeedback.style.display='block';document.getElementById('quiz-score').textContent=`Score: ${score} / ${questions.length}`;if(qi<questions.length-1)nextBtn.style.display='inline-block';else{qTitle.textContent='Quiz complete!';qText.textContent=`Final score: ${score} out of ${questions.length}.`;restartBtn.style.display='inline-block';}}
+nextBtn.addEventListener('click',()=>{qi++;renderQuestion();});restartBtn.addEventListener('click',()=>{qi=0;score=0;document.getElementById('quiz-score').textContent='Score: 0 / 4';renderQuestion();});renderQuestion();
+const checks=[...document.querySelectorAll('#checklist-items input')];function updateShield(){const count=checks.filter(c=>c.checked).length;const pct=Math.round(count/checks.length*100);document.getElementById('shield-bar').style.width=pct+'%';document.getElementById('shield-text').textContent=pct+'% protected';}checks.forEach(c=>c.addEventListener('change',updateShield));
+</script>
+</body>
+</html>
